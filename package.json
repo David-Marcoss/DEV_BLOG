@@ -1,0 +1,31 @@
+{
+  "name": "dev_blog",
+  "version": "1.0.0",
+  "description": "- um web site para um blog interativo contruido com javaScript",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "nodemon",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/David-Marcoss/DEV_BLOG.git"
+  },
+  "author": "DAVID MARCOS",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/David-Marcoss/DEV_BLOG/issues"
+  },
+  "homepage": "https://github.com/David-Marcoss/DEV_BLOG#readme",
+  "devDependencies": {
+    "nodemon": "^3.1.0"
+  },
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "dotenv": "^16.4.5",
+    "ejs": "^3.1.9",
+    "express": "^4.19.2",
+    "mysql2": "^3.9.3",
+    "sequelize": "^6.37.2"
+  }
+}
