@@ -1,0 +1,27 @@
+<%- include('../../partials/header')%>
+<%- include('../../partials/navbar')%>
+
+
+<div class="container">
+    <br>
+    <div class="card">
+        <div class="card-header">
+            <h2>Categorias</h2>
+            <a  class="btn btn-success" href="/admin/categories/new">Cadastrar</a>
+        </div>
+
+        <% categories.forEach( category => { %>
+        <div class="card-body">
+
+            <h3><%= category.name %></h3>
+            <a  class="btn btn-primary" href="/admin/categories/update/<%= category.id %>">Editar</a>
+            <a  class="btn btn-danger" href="/admin/categories/delete/<%= category.id %>">Excluir</a>
+
+        </div>
+        <hr>
+        <% })%>
+    </div>
+
+</div>
+
+<%- include('../../partials/footer')%>
