@@ -11,7 +11,7 @@
 
         <div class="card-body">
 
-            <form method="POST" action="/admin/articles/save">
+            <form method="POST" action="/admin/articles/update/<%= article.id %>">
                 <div class="form-group">
                     <label for="titulo">Titulo</label>
                     <input type="text" name="title" class="form-control" id="titulo" value="<%= article.title %>">
@@ -27,8 +27,15 @@
                 <div class="form-group">
                     <label for="category">Categoria</label>
                     <select name="category" class="form-control" id="category">
-                        <option value="<%= article.category.id %>"><%= article.category.name %></option>
+                        <% categories.forEach(category => { %>
+                            <% if (category.id === article.category.id){%>
+                                <option selected value="<%= category.id %>"><%= category.name %></option>
+                            <%}else{%>
+                                <option value="<%= category.id %>"><%= category.name %></option>
+                            <%}%>
+                        <% }) %>
                     </select>
+                
                 </div>
 
                 <button type="submit" class="btn btn-success">salvar</button>

@@ -3,3 +3,22 @@
     color: white;
 }
 
+.jumbotron {
+    background-image: url("../img/capa2.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: white;
+    padding: 50px; /* Adicione algum espaçamento interno para o texto */
+}
+
+.jumbotron h1 {
+    font-size: 36px; /* Ajuste o tamanho da fonte do título */
+    margin-bottom: 20px; /* Adicione um espaço entre o título e o parágrafo */
+}
+
+.jumbotron p {
+    font-size: 18px; /* Ajuste o tamanho da fonte do texto */
+    line-height: 1.5; /* Ajuste o espaçamento entre as linhas */
+}
+
