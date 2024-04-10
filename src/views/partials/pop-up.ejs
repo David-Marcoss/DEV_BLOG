@@ -1,0 +1,13 @@
+<script>
+    function confirmDelete(event,form,item){
+
+        //evita que o formulario seja enviado
+        event.preventDefault() 
+
+        var dell = confirm(`Deseja excluir a ${item}?`)
+
+        if(dell){
+            form.submit()
+        }
+    }
+</script>

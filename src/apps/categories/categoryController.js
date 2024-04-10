@@ -3,15 +3,15 @@ const Slugify = require("slugify")
 
 class CategoryControler{
 
-    static form(req,res){
-        res.render("admin/category/form")
+    static new(req,res){
+        res.render("admin/category/new")
     }
 
     static findAll(req,res){
 
         Category.findAll({row:true})
             .then( 
-                categories => res.render("admin/category/categories",{categories})
+                categories => res.render("admin/category/index",{categories})
             )
             .catch(
                 error => res.status(500).send("Não foi possivel conclui operação !!!")
@@ -37,12 +37,12 @@ class CategoryControler{
             )
 
         }else{
-            res.redirect("admin/category/form")
+            res.redirect("admin/category/new")
 
         }
     }
 
-    static updateForm(req, res){
+    static edit(req, res){
 
         const id = req.params.id
 
@@ -51,7 +51,7 @@ class CategoryControler{
                 { where:{ id: id } }
             )
             .then(
-                category => res.render("admin/category/formUpdate",{category})
+                category => res.render("admin/category/edit",{category})
             )
             .catch( e =>
                 res.redirect("admin/categories")
@@ -88,36 +88,23 @@ class CategoryControler{
             )
 
         } else {
-            res.redirect("admin/category/form")
+            res.redirect("admin/category/edit")
         }
     }
 
     static delete( req, res){
         const id = req.body.id
 
-        if(id){
-            Category.findOne(
-                    {where:{ id: id} }
-                )
-                .then(
-                    category =>{
-                        if (category){
-                            Category.destroy(
-                                {where:{ id: id}}
-                            )
-                            .then(
-                                () => res.redirect("/admin/categories")
-                            )
-                        }else{
-                            res.status(404).send("Categoria não encontrada !!!")
-                        }
-                    }
-                )
-                .catch(
-                    error => res.status(404).send("Categoria não encontrada !!!")
+        if( !isNaN(id) ){
+            Category.findByPk(id).then(
+                    () => Category.destroy({where:{ id: id}}).then(
+                            () => res.redirect("/admin/categories")
+                    )
+                ).catch(
+                    () => res.redirect("/admin/categories")
                 )
         }else{
-            res.status(404).send("Não foi possivel realizar operação !!!")
+            res.redirect("/admin/categories")
         }
     }
     

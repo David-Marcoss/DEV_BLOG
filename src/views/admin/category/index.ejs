@@ -25,9 +25,9 @@
                 <th><%= category.name %></th>
                 <th><%= category.slug%></th>
                 <th>
-                    <a  class="btn btn-primary" href="/admin/categories/update/<%= category.id %>">Editar</a>
+                    <a  class="btn btn-primary" href="/admin/categories/edit/<%= category.id %>">Editar</a>
 
-                    <form method="POST" action="/admin/categories/delete/" class="form" style="display: inline;" onsubmit="confirmDelete(event,this)">
+                    <form method="POST" action="/admin/categories/delete/" class="form" style="display: inline;" onsubmit="confirmDelete(event,this,'categoria')">
                         <input type="hidden" value="<%= category.id %>"  name="id">
                         <button type="submit" class="btn btn-danger">Excluir</button>
                     </form>
@@ -44,18 +44,5 @@
 
 <%- include('../../partials/footer')%>
 
-<script>
-    function confirmDelete(event,form){
-        
-        console.log("karai")
-
-        //evita que o formulario seja enviado
-        event.preventDefault() 
-
-        var dell = confirm("Deseja excluir a Categoria?")
-
-        if(dell){
-            form.submit()
-        }
-    }
-</script>
+<!-- adciona pop-up de exclusão -->
+<%- include('../../partials/pop-up')%>

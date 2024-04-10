@@ -4,7 +4,7 @@ const Category =  require("../categories/categoryModel")
 
 
 const Article = dbConnection.define("articles", {
-    name: {
+    title: {
         type: Sequelize.STRING,
         allowNull: false
     },
