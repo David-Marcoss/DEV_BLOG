@@ -22,7 +22,7 @@ async function pagination(model, page, numItemsPage, modelInclude) {
 
     next = offset + numItemsPage < count;
 
-    const numPages = Math.ceil(count / numItemsPage);
+    const numPages = parseInt(count / numItemsPage);
 
     return { data: rows, next, numPages };
 }

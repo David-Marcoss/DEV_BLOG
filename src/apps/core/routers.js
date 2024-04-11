@@ -5,6 +5,7 @@ const articlesRouter   = require("../articles/articleRouter")
 
 const routes = (app) => {
     app.route("/").get(indexControler.index)
+    app.route("/home/page/:page").get(indexControler.index)
     app.use(
         categoriesRouter,
         articlesRouter

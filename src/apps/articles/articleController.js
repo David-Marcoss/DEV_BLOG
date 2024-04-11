@@ -76,12 +76,18 @@ class ArticleControler{
         }
         
         pagination(Article,page,8,Category).then( result => {
-            res.render("admin/articles/",{
-                articles: result.data,
-                page: page,
-                next: result.next, 
-                numPages: result.numPages
-            })
+
+            if (page <= result.numPages){
+                res.render("admin/articles/",{
+                    articles: result.data,
+                    page: page,
+                    next: result.next, 
+                    numPages: result.numPages,
+                    url: "/admin/articles"
+                })
+            }else{
+                res.redirect("/admin/articles/")
+            }
         })
         
     }

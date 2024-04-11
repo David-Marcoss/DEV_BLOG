@@ -1,5 +1,6 @@
 const Category = require("./categoryModel")
 const Slugify = require("slugify")
+const pagination = require("../utils/pagination")
 
 class CategoryControler{
 
@@ -9,14 +10,25 @@ class CategoryControler{
 
     static findAll(req,res){
 
-        Category.findAll({row:true})
-            .then( 
-                categories => res.render("admin/category/index",{categories})
-            )
-            .catch(
-                error => res.status(500).send("Não foi possivel conclui operação !!!")
-            )
+        let page = 0
 
+        if(req.params.page){
+            page = req.params.page
+        }
+        pagination(Category,page,8).then( result => {
+
+            if (page <= result.numPages){
+                res.render("admin/category/index",{
+                    categories: result.data,
+                    page: page,
+                    next: result.next, 
+                    numPages: result.numPages,
+                    url: "/admin/categories"
+                })
+            }else{
+                res.redirect("/admin/categories")
+            }
+        })
     }
 
     static create(req,res){
