@@ -1,24 +1,49 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="/">
+  <a class="navbar-brand" href="/">
       <img src="/img/blogger.png" width="30" height="30" class="d-inline-block align-top" alt="">
       DevBlog
-    </a>
+  </a>
 
-    <div class="navbar-collapse">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-            <a class="nav-link" href="/">Home</a>
-            </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+              <a class="nav-link" href="/">Home</a>
+          </li>
+          <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   Categorias
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <% categories.forEach( category => { %>
-                        <a class="dropdown-item" href="/articles/category/<%= category.slug %>"><%= category.name %></a>
-                    <%})%>
-                </div>
-              </li>
-        </ul>
-    </div>
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <% categories.forEach( category => { %>
+                  <a class="dropdown-item" href="/articles/category/<%= category.slug %>"><%= category.name %></a>
+                  <% }) %>
+              </div>
+          </li>
+      </ul>
+
+      <ul class="navbar-nav ml-auto mr-5" id="login">
+          <% if( isAuthenticated ) { %>
+          <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownProfile" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <img src="/img/login.png" alt="" width="20" height="20" class="mr-2">
+                    <span>Perfil</span>
+              </a>
+              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownProfile">
+                  <a class="dropdown-item" href="/users/redefinePassword">Redefinir senha</a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="/users/logout">Sair</a>
+              </div>
+          </li>
+          <% } else { %>
+          <li class="nav-item">
+              <a class="nav-link" href="/users/logout">
+                  <div class="d-flex align-items-center">
+                    <img src="/img/login.png" alt="" width="20" height="20" class="mr-2">
+                    <span>Login</span>
+                  </div>
+              </a>
+          </li>
+          <% } %>
+      </ul>
+  </div>
 </nav>
