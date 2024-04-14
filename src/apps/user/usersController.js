@@ -1,5 +1,6 @@
 const User = require("./userModel")
 const bcrypt = require('bcrypt');
+const pagination = require("../utils/pagination")
 
 class UserController{
     
@@ -24,8 +25,11 @@ class UserController{
                 req.session.user = {
                     id: user.id,
                     name: user.name,
+                    isAdmin: user.isAdmin
                 };
+             
                 res.redirect("/");
+            
             } else {
                 const info = {
                     error: true,
@@ -65,7 +69,9 @@ class UserController{
     }
 
     static async create(req,res){
-        const {name,email,password,password2} = req.body
+        const {name,email,isAdmin,password,password2} = req.body
+
+        console.log( req.body )
 
         if( name && email && password  && password2 && password == password2){
             
@@ -75,11 +81,12 @@ class UserController{
                 const salt = bcrypt.genSaltSync(10)
                 const hash = bcrypt.hashSync(password,salt)
 
-                const user = await User.create({name, email, password:hash,isAdmin:false})
+                const user = await User.create({name, email, password:hash,isAdmin})
 
                 req.session.user = {
                     id: user.id,
                     name: user.name,
+                    isAdmin: user.isAdmin
                 }
 
                 res.redirect("/")
@@ -145,6 +152,46 @@ class UserController{
             };
 
             res.redirect(`/users/redefinePassword?info=${JSON.stringify(info)}`);
+        }
+
+    }
+
+    static async findAll(req,res){
+        
+        let page = 0;
+
+        if (req.params.page) {
+            page = req.params.page;
+        }
+    
+        try {
+            const result = await pagination(User, page, 8);
+
+            if (page <= result.numPages) {
+
+                const users = result.data.map(e => ({
+                    id: e.id,
+                    name: e.name,
+                    email: e.email,
+                    isAdmin: e.isAdmin
+                }));
+                
+                res.render("admin/users/index", {
+                    users: users,
+                    page: page,
+                    next: result.next,
+                    numPages: result.numPages,
+                    url: "/admin/users"
+                });
+
+            } else {
+                res.redirect("/admin/users/");
+            }
+        } catch (error) {
+
+            console.log(error)
+
+            res.redirect("/admin");
         }
 
     }

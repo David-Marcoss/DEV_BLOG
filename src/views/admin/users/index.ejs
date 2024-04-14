@@ -1,0 +1,46 @@
+<%- include('../../partials/header')%>
+<%- include('../../partials/navbar')%>
+
+
+<div class="container">
+    <br>
+    <h2>Usuários</h2>
+    <hr>
+    
+    <table class="table table-bordered">
+
+        <thead class=" thead-dark">
+            <tr>
+                <th>Id</th>
+                <th>nome</th>
+                <th>e-mail</th>
+                <th>Tipo de usuario</th>
+            </tr>
+        </thead>
+        
+        <tbody>
+            <% users.forEach( user => { %>
+            <tr>
+                <th><%= user.id %></th>
+                <th><%= user.name %></th>
+                <th><%= user.email%></th>
+                <% if(user.isAdmin ){ %>
+                    <th>Admistrador</th>
+                <% }else{ %>
+                    <th>Leitor</th>
+                <% } %>
+            </tr>
+            <% })%>
+        </tbody>
+        
+        
+    </table>
+
+    <%- include('../../partials/pagination')%>
+
+</div>
+
+<%- include('../../partials/footer')%>
+
+<!-- adciona pop-up de exclusão -->
+<%- include('../../partials/pop-up')%>

@@ -1,6 +1,4 @@
 <%- include('../partials/header')%>
-
-
 <%- include('../partials/logo')%>
 
 <div class="container mt-5">
@@ -22,6 +20,14 @@
                         <div class="form-group">
                             <label for="email">Email</label>
                             <input type="email" class="form-control" id="email" name="email" placeholder="Digite seu email">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleFormControlSelect1">Tipo de Usuario</label>
+                            
+                            <select name="isAdmin" class="form-control" id="exampleFormControlSelect1">
+                              <option value="<%= false%>" >Leitor</option>
+                              <option value="<%= true%>" >Admistrador</option>
+                            </select>
                         </div>
                         <div class="form-group">
                             <label for="senha">Senha</label>

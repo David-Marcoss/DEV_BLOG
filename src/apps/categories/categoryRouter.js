@@ -1,15 +1,16 @@
 const express = require("express")
 const CategoryController = require("./categoryController")
+const {isAdmin} = require("../middlewares/authUser")
 
 const categoriesRouters = express.Router()
 
-categoriesRouters.get("/admin/categories", CategoryController.findAll)
-categoriesRouters.get("/admin/categories/page/:page", CategoryController.findAll)
-
-categoriesRouters.get("/admin/categories/new", CategoryController.new)
-categoriesRouters.get("/admin/categories/edit/:id", CategoryController.edit)
-categoriesRouters.post("/admin/categories/update/:id", CategoryController.update)
-categoriesRouters.post("/admin/categories/delete/", CategoryController.delete)
-categoriesRouters.post("/admin/categories/save", CategoryController.create)
+//rotas admin
+categoriesRouters.get("/admin/categories",isAdmin,CategoryController.findAll)
+categoriesRouters.get("/admin/categories/page/:page", isAdmin,CategoryController.findAll)
+categoriesRouters.get("/admin/categories/new", isAdmin,CategoryController.new)
+categoriesRouters.get("/admin/categories/edit/:id",isAdmin, CategoryController.edit)
+categoriesRouters.post("/admin/categories/update/:id",isAdmin, CategoryController.update)
+categoriesRouters.post("/admin/categories/delete/",isAdmin, CategoryController.delete)
+categoriesRouters.post("/admin/categories/save",isAdmin, CategoryController.create)
 
 module.exports = categoriesRouters

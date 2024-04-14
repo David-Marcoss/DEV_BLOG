@@ -1,6 +1,7 @@
 const dbConnection = require("../../database/database");
 const Sequelize = require("sequelize"); // importar o sequelize
-const Category =  require("../categories/categoryModel")
+const Category =  require("../categories/categoryModel");
+const User = require("../user/userModel");
 
 
 const Article = dbConnection.define("articles", {
@@ -21,8 +22,11 @@ const Article = dbConnection.define("articles", {
 
 // relacionamento 1 p 1
 Article.belongsTo(Category)
+Article.belongsTo(User)
+
 // relacionamento 1 p M
 Category.hasMany(Article)
+User.hasMany(Article)
 
 
 

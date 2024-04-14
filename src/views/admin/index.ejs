@@ -4,18 +4,24 @@
 
 <div class="container">
     <br>
-    <div class="card">
+    <div class="card " >
         <div class="card-header">
             <h2>Painel Administrativo</h2>
         </div>
 
-        <div class="card-body">
-
-            models
-
-        </div>
+        <ul class="list-group list-group-flush text-center" id="painel-models">
+            <li class="list-group-item">
+                <a href="/admin/users">Usuários</a>
+            </li>
+            <li class="list-group-item">
+                <a href="/admin/articles">Artigos</a>
+            </li>
+            <li class="list-group-item">
+                <a href="/admin/categories">Categorias</a>
+            </li>
+        </ul>
     </div>
-
 </div>
+
 
 <%- include('../partials/footer')%>

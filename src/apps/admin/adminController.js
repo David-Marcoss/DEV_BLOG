@@ -3,8 +3,16 @@ class AdminController{
 
     static index(req,res){
 
-        res.render("admin/index")
+        if (req.session.user && req.session.user.isAdmin) {   
+            res.render("admin/index")
+
+        }else if (req.session.user) {
+            res.redirect("/");
+        }else{
+            res.redirect("/users/login");
+        }
     }
+
 
 }
 

@@ -7,14 +7,14 @@ class IndexControler{
     static index(req,res){
 
         let page = 0
+        const ordering =true
 
         if(req.params.page){
             page = parseInt(req.params.page)
         }
 
-        console.log("page:",page)
         
-        pagination(Article,page,5,Category).then( result => {
+        pagination(Article,page,5,[Category],ordering).then( result => {
 
             Category.findAll({row: true}).then( categories =>{
                 

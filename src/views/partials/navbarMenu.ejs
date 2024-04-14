@@ -19,6 +19,16 @@
                   <% }) %>
               </div>
           </li>
+          
+          <% if (isAuthenticated){ %>
+            
+            <% if(isAdmin){%>
+                <li class="nav-item">
+                    <a class="nav-link" href="/admin">Painel Administrativo</a>
+                </li>
+            <% } %>
+          <% } %>
+
       </ul>
 
       <ul class="navbar-nav ml-auto mr-5" id="login">

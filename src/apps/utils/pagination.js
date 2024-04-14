@@ -1,5 +1,5 @@
 
-async function pagination(model, page, numItemsPage, modelInclude) {
+async function pagination(model, page, numItemsPage, modelInclude, ordering) {
     let offset;
     let next;
 
@@ -15,7 +15,11 @@ async function pagination(model, page, numItemsPage, modelInclude) {
     };
 
     if (modelInclude) {
-        options.include = [{ model: modelInclude }];
+        options.include = modelInclude.map(e => ({ model: e }));
+    }
+
+    if(ordering){
+        options.ordering = [["id","DESC"]]
     }
 
     const { count, rows } = await model.findAndCountAll(options);
