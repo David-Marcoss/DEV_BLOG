@@ -1,5 +1,5 @@
 
-async function pagination(model, page, numItemsPage, modelInclude, ordering) {
+async function pagination(model, page, numItemsPage, modelInclude, ordering, filter) {
     let offset;
     let next;
 
@@ -19,7 +19,11 @@ async function pagination(model, page, numItemsPage, modelInclude, ordering) {
     }
 
     if(ordering){
-        options.ordering = [["id","DESC"]]
+        options.order = [["id", "DESC"]]
+    }
+
+    if(filter){
+        options.where = filter
     }
 
     const { count, rows } = await model.findAndCountAll(options);

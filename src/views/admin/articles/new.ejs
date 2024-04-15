@@ -4,17 +4,24 @@
 
 <div class="container">
     <br>
+    <%- include('../../partials/alert')%>
     <div class="card">
         <div class="card-header">
             <h2>Criar Artigo</h2>
         </div>
 
         <div class="card-body">
+            
 
             <form method="POST" action="/admin/articles/save">
                 <div class="form-group">
                     <label for="titulo">Titulo</label>
                     <input type="text" name="title" class="form-control" id="titulo">
+                </div>
+
+                <div class="form-group">
+                    <label >Resumo</label>
+                    <input type="text" name="resume" class="form-control" id="titulo" placeholder="Um breve resumo sobre seu artigo">
                 </div>
                 
                 <div class="form-group">

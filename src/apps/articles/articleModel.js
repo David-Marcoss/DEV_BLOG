@@ -16,6 +16,10 @@ const Article = dbConnection.define("articles", {
     body:{
         type: Sequelize.TEXT,
         allowNull: false
+    },
+    resume:{
+        type: Sequelize.TEXT,
+        allowNull: true
     }
 
 })

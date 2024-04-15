@@ -18,9 +18,11 @@
                 <div class="card">
                     <div class="card-header">
                         <h3> <%=article.title%> </h3>
+                        <p style="color: rgb(144, 143, 143);">Categoria: <%= category.name %>  | Autor: <%=article.user.name%></p>
                     </div>
-
+    
                     <div class="card-body">
+                        <p><%= article.resume %></p>
                         <a href="/articles/<%= article.slug %>"><button class="btn btn-success"> Ler </button></a>
                     </div>
                 </div>

@@ -39,6 +39,10 @@
                     <span>Perfil</span>
               </a>
               <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownProfile">
+              <% if( isAdmin ) { %>
+                <a class="dropdown-item" href="/admin/articles/user">Meus Artigos</a>
+                <div class="dropdown-divider"></div>
+              <% } %>
                   <a class="dropdown-item" href="/users/redefinePassword">Redefinir senha</a>
                   <div class="dropdown-divider"></div>
                   <a class="dropdown-item" href="/users/logout">Sair</a>

@@ -10,14 +10,10 @@
         <div class="col-md-6 text-left">
             <a class="btn btn-success" href="/admin/articles/new">Cadastrar</a><br><br>
         </div>
-        <!--
-        <div class="col-md-6 text-right"> 
-            <p>Total items: </p>
-        </div>
-        -->
+
     </div>
     
-    
+
     <table class="table table-bordered">
 
         <thead>
@@ -37,24 +33,31 @@
                 <th><%= article.id %></th>
                 <th><%= article.title %></th>
                 <th><%= article.slug %></th>
-                <th><%= article.category.name %></th>
+                <th><%= article.category.name%></th>
                 <th><%= article.user.name %></th>
-                <th>
-                    <a  class="btn btn-primary" href="/admin/articles/edit/<%= article.id %>">Editar</a>
-
-                    <form method="POST" action="/admin/articles/delete" class="form" style="display: inline;" onsubmit="confirmDelete(event,this,'artigo')">
-                        <input type="hidden" value="<%= article.id %>"  name="id">
-                        <button type="submit" class="btn btn-danger">Excluir</button>
-                    </form>
+                <th class="text-center">
+                    <div class="d-flex">
+                        <a class="btn btn-primary mr-2" href="/articles/<%= article.slug %>">Ver</a>
+                
+                        <% if (article.userId == userId) { %>
+                
+                        <a class="btn btn-warning mr-2" href="/admin/articles/edit/<%= article.id %>">Editar</a>
+                
+                        <form method="POST" action="/admin/articles/delete" class="form" style="display: inline;" onsubmit="confirmDelete(event,this,'artigo')">
+                            <input type="hidden" value="<%= article.id %>" name="id">
+                            <button type="submit" class="btn btn-danger">Excluir</button>
+                        </form>
+                
+                        <% } %>
+                    </div>
                 </th>
+                
             </tr>
             <% })%>
         </tbody>
-        
+
         
     </table>
-    
-    <%- include('../../partials/pagination')%>
 
 </div>
 

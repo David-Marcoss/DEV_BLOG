@@ -1,5 +1,6 @@
 const Article = require("../articles/articleModel")
 const Category = require("../categories/categoryModel")
+const User = require("../user/userModel")
 const pagination = require("../utils/pagination")
 
 class IndexControler{
@@ -12,9 +13,8 @@ class IndexControler{
         if(req.params.page){
             page = parseInt(req.params.page)
         }
-
         
-        pagination(Article,page,5,[Category],ordering).then( result => {
+        pagination(Article,page,5,[Category,User],ordering).then( result => {
 
             Category.findAll({row: true}).then( categories =>{
                 

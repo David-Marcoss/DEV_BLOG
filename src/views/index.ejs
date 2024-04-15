@@ -11,10 +11,19 @@
                 que impulsionem seu desenvolvimento profissional e pessoal. Junte-se a nós nessa jornada de aprendizado
                 e descoberta!</p>
             <hr class="my-4">
-            <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
-            <p class="lead">
-              <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
-            </p>
+            
+            <% if (!isAuthenticated) {%>
+                <p>Registre-se em nossa plataforma e crie seus próprios artigos de forma fácil e rápida.</p>
+                <p class="lead">
+                <a class="btn btn-primary btn-lg" href="/users/login" role="button">Registre-se</a>
+                </p>
+            <% } else if (isAuthenticated && isAdmin) {%>
+                <p>Seja bem vindo! Crie novos artigos de forma fácil e rápida.</p>
+                <p class="lead">
+                <a class="btn btn-primary btn-lg" href="/admin/articles/new" role="button">Criar Artigo</a>
+                </p>
+            <% } %>
+
         </div>
         <br>
         
@@ -25,9 +34,11 @@
             <div class="card">
                 <div class="card-header">
                     <h3> <%=article.title%> </h3>
+                    <p style="color: rgb(144, 143, 143);">Categoria: <%=article.category.name%>  | Autor: <%=article.user.name%></p>
                 </div>
 
                 <div class="card-body">
+                    <p><%= article.resume %></p>
                     <a href="/articles/<%= article.slug %>"><button class="btn btn-success"> Ler </button></a>
                 </div>
             </div>

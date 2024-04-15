@@ -1,5 +1,15 @@
 version: '3.8'
 services:
+  node-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+      
+    command: sh -c "npm i && node src/database/syncDb.js && npm start"
   
   db:
     image: mysql:8.0
@@ -11,7 +21,7 @@ services:
       - MYSQL_ROOT_PASSWORD=123456
 
     ports:
-      - '3305:3306'
+      - '3306'
     volumes:
       - db:/var/lib/mysql
       

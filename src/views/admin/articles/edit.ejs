@@ -4,17 +4,23 @@
 
 <div class="container">
     <br>
+    <%- include('../../partials/alert')%>
     <div class="card">
         <div class="card-header">
             <h2>Editar Artigo</h2>
         </div>
 
         <div class="card-body">
-
+    
             <form method="POST" action="/admin/articles/update/<%= article.id %>">
                 <div class="form-group">
                     <label for="titulo">Titulo</label>
                     <input type="text" name="title" class="form-control" id="titulo" value="<%= article.title %>">
+                </div>
+                
+                <div class="form-group">
+                    <label >Resumo</label>
+                    <input type="text" name="resume" class="form-control" id="titulo" value="<%= article.resume %>">
                 </div>
                 
                 <div class="form-group">
@@ -26,7 +32,7 @@
 
                 <div class="form-group">
                     <label for="category">Categoria</label>
-                    <select name="category" class="form-control" id="category">
+                    <select name="categoryId" class="form-control" id="category">
                         <% categories.forEach(category => { %>
                             <% if (category.id === article.category.id){%>
                                 <option selected value="<%= category.id %>"><%= category.name %></option>

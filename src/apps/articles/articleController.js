@@ -11,7 +11,7 @@ class ArticleControler {
     // Renderiza página de leitura de artigo
     static async readArticle(req, res) {
         const slug = req.params.slug;
-
+        
         try {
             const article = await Article.findOne({
                 where: { slug: slug },
@@ -41,23 +41,30 @@ class ArticleControler {
             });
 
             if (category) {
-                const categories = await Category.findAll({ raw: true });
+                const articles = await Article.findAll({
+                    include: [{ model: User }],
+                    order: [["id", "DESC"]],
+                    where: { categoryId: category.id }
+                });
+                
                 res.render("articlesCategory", {
-                    articles: category.articles,
-                    categories: categories,
+                    articles: articles,
                     category: category,
+                    categories: await Category.findAll({ raw: true })
                 });
             } else {
                 res.redirect("/");
             }
         } catch (error) {
+            console.error("Erro ao buscar artigos por categoria:", error);
             res.redirect("/");
         }
     }
 
+
     static async findAll(req, res) {
         let page = 0;
-
+    
         if (req.params.page) {
             page = req.params.page;
         }
@@ -66,7 +73,7 @@ class ArticleControler {
             const result = await pagination(Article, page, 8, [Category,User]);
 
             if (page <= result.numPages) {
-                res.render("admin/articles/", {
+                res.render("admin/articles/index", {
                     articles: result.data,
                     page: page,
                     next: result.next,
@@ -81,6 +88,19 @@ class ArticleControler {
         }
     }
 
+    static async articlesUser(req, res) {
+        const articles = await Article.findAll({
+            include: [{ model: User }, { model: Category }],
+            where: { userId: req.session.user.id },
+        })
+
+        console.log(articles)
+
+        res.render("admin/articles/index", {
+            articles,
+        })
+    }
+
     static async new(req, res) {
         try {
             const categories = await Category.findAll({ raw: true });
@@ -93,31 +113,39 @@ class ArticleControler {
     }
 
     static async create(req, res) {
-        const {title, body, categoryId, userId} = req.body;
+        const {title, resume ,body, categoryId, userId} = req.body;
         const slug = slugify(title)
 
-        console.log(req.body)
-
-        
         if (title && body && categoryId && userId) {
             try {
 
                 if (User.findByPk(userId) != undefined){
                     await Article.create({
                         title,
+                        resume,
                         body,
                         categoryId,
                         userId,
                         slug
                     });
-                    res.redirect("/admin/articles");
+                    res.redirect("/admin/articles/user");
                 }
             
             }catch(error) {
-                res.status().send(error);
+                const info = {
+                    error: true,
+                    msg: { title: "Não foi possível concluir a operação tente novamente", 
+                    body: "!!" }
+                };
+                res.redirect(`/admin/articles/new?info=${JSON.stringify(info)}`);
             }
         } else {
-            res.redirect("/admin/articles/new");
+            const info = {
+                error: true,
+                msg: { title: "Não foi possível concluir a operação", 
+                body: "preencha os campos corretamente!!" }
+            };
+            res.redirect(`/admin/articles/new?info=${JSON.stringify(info)}`);
         }
     }
 
@@ -127,7 +155,7 @@ class ArticleControler {
         if (!isNaN(id)) {
             try {
                 await Article.destroy({ where: { id: id } });
-                res.redirect("/admin/articles");
+                res.redirect("/admin/articles/user");
             } catch (error) {
                 res.status(500).send("Não foi possível concluir operação !!!");
             }
@@ -156,33 +184,51 @@ class ArticleControler {
     }
 
     static async update(req, res) {
-        const id = req.params.id;
-        const title = req.body.title;
-        const body = req.body.body;
-        const categoryId = req.body.category;
+        const id = req.params.id
+        const {title, resume ,body, categoryId} = req.body;
+
         const slug = Slugify(title);
 
-        if (id && title && body && categoryId) {
+        if (id && title && body && categoryId && resume) {
             try {
                 const article = await Article.findByPk(id);
+
                 if (article) {
                     await Article.update({
                         title,
+                        resume,
                         body,
                         categoryId,
-                        slug
+                        slug,
                     }, {
                         where: { id }
                     });
-                    res.redirect("/admin/articles");
+
+                    res.redirect("/admin/articles/user");
+
                 } else {
-                    res.redirect("/admin/articles");
+                    const info = {
+                        error: true,
+                        msg: { title: "Não foi possível concluir a operação tente novamente", 
+                        body: "Artigo não encontrado!!" }
+                    };
+                    res.redirect(`/admin/articles/edit/${id}?info=${JSON.stringify(info)}`);
                 }
             } catch (error) {
-                res.status().send(error);
+                const info = {
+                    error: true,
+                    msg: { title: "Não foi possível concluir a operação tente novamente", 
+                    body: "!!" }
+                };
+                res.redirect(`/admin/articles/edit/${id}?info=${JSON.stringify(info)}`);
             }
         } else {
-            res.redirect("/admin/articles");
+            const info = {
+                error: true,
+                msg: { title: "Não foi possível concluir a operação tente novamente", 
+                body: "preencha os campos corretamente!!" }
+            };
+            res.redirect(`/admin/articles/edit/${id}?info=${JSON.stringify(info)}`);
         }
     }
 }

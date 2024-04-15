@@ -6,6 +6,7 @@ function isAuthenticated(req,res,next){
         
         res.locals.isAuthenticated = true
         res.locals.isAdmin = req.session.user.isAdmin
+        res.locals.userId = req.session.user.id
 
     }else{
         res.locals.isAuthenticated = false
